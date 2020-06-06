@@ -8,13 +8,16 @@ NetBots is inspired by [RobotWar](https://en.wikipedia.org/wiki/RobotWar) from t
 
 The image below is the NetBots viewer. The filled circles are robots and the unfilled circle is an explosion.
 
-[![](images/basicgame.png)](http://www.youtube.com/watch?v=y2_1gFQjgCo "NetBots Demo Video")
-Click image to watch youtube video.
+**Viewer**
 
-Below is a sample score board, which is output after each game by the NetBots server.
+<img src="images/basicgame.png" width="80%">
+
+**Scoreboard**
+
+Below is a sample scoreboard, which is output after each game by the NetBots server.
 ```
 
-                ------ Score Board ------
+                  ------ Scoreboard ------
                Tournament Time: 1140.929 secs.
                          Games: 1000
              Average Game Time: 1.141 secs.
@@ -41,6 +44,10 @@ Below is a sample score board, which is output after each game by the NetBots se
              Oscar        3418  20.2      141       35.94    21832        3.33    72758.46  127.0.0.1:20189      
  ------------------------------------------------------------------------------------------------------------------
 ```
+
+**Demo Video**
+
+[![NetBots Demo Video](https://img.youtube.com/vi/y2_1gFQjgCo/0.jpg)](https://www.youtube.com/watch?v=y2_1gFQjgCo)
 
 ### How is NetBots different?
 
@@ -104,6 +111,32 @@ For example, to run a 1000 game tournament at 5 times faster (0.01 sec/step or 1
 python netbots_server -games 1000 -stepsec 0.01 -stepmax 2000
 ```
 
+## Increasing Netbots Performance
+
+Running tournaments can take a long time. One way to speed up tournaments is to increase the steps per second however this may be limited by hardware. Significant performance increases can be found by installing the binary msgpack package for python. Msgpack is used to encode and decode messages between the robots and server. Running at 2000 steps/second (-stepsec 0.0005) should be possible if: modern hardware is used, binary msgpack is installed, the server and all bots are running on localhost (127.0.0.1), and no viewer is connected. 
+
+To install binary msgpack on Windows use:
+```
+py -3 -m pip install msgpack-python
+```
+
+To install binary msgpack on Linux use:
+```
+pip3 install msgpack-python
+```
+
+To ensure the binary msgpack is being used, look for a log when the server and bots start up:
+```
+INFO 2020-05-28 23:11:13.115 netbots_ipc.<module>: Using binary python msgpack.
+```
+
+## Running Larger Tournaments on Linux
+
+The NetBots server is limited in that it runs a tournament with the same robots in every game. One solution to having more than 4 robots is to increase the number of robots (-bots server) and make the arena larger (-arenasize). While this works it also changes the game dynamics. 
+
+To run a tournament with more than 4 robots but with default settings (4 robots per game and 1000x1000 arena) the divisions_tournament.py script can be used (Linux only). It can run a tournament with a multiple of 4 robots (4, 8, 16, ...) up to 64 total. Robots are put into divisions (4 robots in each). Over consecutive rounds, better robots will move to lower numbered divisions (division 0 being the best). See the rundivisions.sh script for an example of how to run and then customize to meet your needs.
+
+
 ## Running on Separate Computers
 
 By default NetBots only listens on localhost 127.0.0.1 which does not allow messages to be sent or received between computers. To listen on all network interfaces, and allow messages from other computers, use ```-ip 0.0.0.0```. 
@@ -153,8 +186,9 @@ usage: netbots_server.py [-h] [-ip Server_IP] [-p Server_Port]
                          [-hitdamage int] [-expldamage int] [-obstacles int]
                          [-obstacleradius int] [-jamzones int] [-allowclasses]
                          [-simplecollisions] [-startperms]
-                         [-scanmaxdistance int] [-noviewers] [-debug]
-                         [-verbose]
+                         [-scanmaxdistance int] [-noviewers]
+                         [-maxsecstojoin int] [-onlylastsb] [-jsonsb filename]
+                         [-debug] [-verbose]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -195,6 +229,12 @@ optional arguments:
   -scanmaxdistance int  Maximum distance a scan can detect a robot. (default:
                         1415)
   -noviewers            Do not allow viewers. (default: False)
+  -maxsecstojoin int    Max seconds server will wait for all bots to join
+                        before quiting. (default: 300)
+  -onlylastsb           Only print the scoreboard when the server quits.
+                        (default: False)
+  -jsonsb filename      Save json formatted server data to filename before
+                        quiting. (default: False)
   -debug                Print DEBUG level log messages. (default: False)
   -verbose              Print VERBOSE level log messages. Note, -debug
                         includes -verbose. (default: False)
@@ -239,6 +279,12 @@ The best way to write your own robot is to start with a demo robot. There are fi
 ## Storing Your Robot
 
 The NetBots git repository is set up to ignore the netbots/myrobots/ directory (see .gitignore). This allows you to clone netbots onto your local computer and then create a new git repository in netbots/myrobots/ for your own work. Please remember to keep your work in a private repository. Sharing your robots publicly is discouraged so netbots will continue to be a useful learning tool for new players.
+
+## Concepts to Make a Better Robot
+
+The video below is for players who want to take their robot to the next level. It covers concepts to build a winning robot. The video assumes you have already read the manual and created a simple robot.
+
+[![NetBots Concepts](https://img.youtube.com/vi/pZ3WV-WPYlY/0.jpg)](https://www.youtube.com/watch?v=pZ3WV-WPYlY)
 
 # Game Mechanics
 
@@ -435,6 +481,11 @@ level is of type str and should be one of DEBUG, VERBOSE, INFO, WARNING, ERROR, 
 ### setLogLevel(debug=False, verbose=False)
 
 Turn DEBUG and VERBOSE printing on or off. Both are off by default. Note, debug = True will set verbose = True.
+
+
+### setLogFile(filename=False):
+
+Turn writing to file on or off. Off by default.
 
 
 # netbots_math

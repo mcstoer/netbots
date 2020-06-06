@@ -6,6 +6,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.3] - 2020-05-30
+### Changed
+- Change scoreboard Missteps from an absolute value to a %.
+- Change divisions_tournament.py to perform cross divisions at the start of each round, after the first.
+- Fixed bug in divisions_tournament.py so that stderr is directed to stdout correctly.
+
+## [2.1.2] - 2020-05-29
+### Changed
+- Fixed bug in stop conditions of divisions_tournament.py.
+
+## [2.1.1] - 2020-05-28
+### Changed
+- Made binary msgpack the default if installed. Updated docs on how to increase NetBots performance with binary msgpack.
+- Updated README docs for divisions_tournament.py use on Linux.
+
+## [2.1.0] - 2020-05-27
+### Added
+- Added Division Tournament runner which can run tournaments with a multiple of 4 robots, up to 64. (4, 8, ..., 64), only on Linux. No documentation has been created yet. For now see code or ask a question on GitHub for help.
+- Added server options for: json output (-jsonsb); suppress the output of all but the last scoreboard (-onlylastsb); maximum time server will wait for robots to join game (-maxsecstojoin). These were needed to support divisional tournaments.
+- Added "Missteps" to scoreboard. Missteps is the number of steps during which no messages were received from the robot.
+- Added file output support to netbots_log via the setLogFile method.
+- Added support for binary msgpack module. However this does not work with the viewer and has been left commented out. If not using the viewer then a significant performance increase can be seen with the binary msgpack. See import section of netbots_ipc module for code to uncomment.
+
+### Changed
+- Changed all instances of "score board" to "scoreboard".
+- Fixed python warning for "is not" being used with a literal. Changed to "!=".
+
 ## [2.0.0] - 2019-06-09
 ### Added
 - Robot classes have been significantly improved. See [Robot Classes](docs/robot_classes.md) for details. Robot classes more values, such as explRadius.
@@ -67,7 +94,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0] - 2019-04-25
 ### Added
-- Added Total Damage inflicted to server score board. This is the damage that explosions from a robot's shells have had on all robots, including the robot that fired the shell.
+- Added Total Damage inflicted to server scoreboard. This is the damage that explosions from a robot's shells have had on all robots, including the robot that fired the shell.
 
 ### Changed
 - Fixed bug where alive robots were colliding with dead robots. Dead robots should not cause collisions.
@@ -79,7 +106,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2019-04-19
 ### Added
-- More stats have been added to server score board.
+- More stats have been added to server scoreboard.
 - Added this CHANGELOG.md
 
 ### Changed
@@ -90,7 +117,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.9.0] - 2019-04-16
 - Beta release.
 
-[Unreleased]: https://github.com/dbakewel/netbots/compare/2.0.0...HEAD
+[Unreleased]: https://github.com/dbakewel/netbots/compare/2.1.3...HEAD
+[2.1.2]: https://github.com/dbakewel/netbots/compare/2.1.1...2.1.3
+[2.1.2]: https://github.com/dbakewel/netbots/compare/2.1.1...2.1.2
+[2.1.1]: https://github.com/dbakewel/netbots/compare/2.1.0...2.1.1
+[2.1.0]: https://github.com/dbakewel/netbots/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/dbakewel/netbots/compare/1.4.0...2.0.0
 [1.4.0]: https://github.com/dbakewel/netbots/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/dbakewel/netbots/compare/1.2.0...1.3.0
