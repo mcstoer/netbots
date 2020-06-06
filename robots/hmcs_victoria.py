@@ -1,4 +1,5 @@
 # Ahoy! It's a "warship"
+# Created by 2019 class of APCS
 
 import os
 import sys
@@ -40,7 +41,6 @@ controller = None  # controller window/viewer
 # basically snagged both these off here:
 # https://stackoverflow.com/questions/21440731/tkinter-getting-key-pressed-event-from-a-function
 # as answered by "User"
-# Man there are almost no answers for Haskell questions on stackoverflow
 
 def keyPressHandler(event):
     global keysDown;

@@ -4,6 +4,7 @@
 # initially designed for the Coastal Renaissance, but should be portable enough
 # for use with other NetBots.
 # Based on the official NetBots viewer
+# Created by 2019 class of APCS
 
 import argparse
 import time
@@ -31,8 +32,6 @@ import netbots_math as nbmath
 
 
 class ViewerData:
-    viewerSocket = None
-
     viewerSocket = None
 
     window = None
