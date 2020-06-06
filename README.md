@@ -883,3 +883,10 @@ Server Returns:
 Format:` { 'type': 'Error', 'result': str }`
 
 Example: `{ 'type': 'Error', 'result':  'Can't process setSpeedRequest when health == 0'}`
+
+
+# Using the Test Harness
+
+The test harness uses a bot and a viewer to allow for controlled testing.  Both bot_controller.py and hmcs_victoria.py need to be in the same directory otherwise hmcs_victoria.py cannot run the viewer in bot_controller.py.  While focused on the viewer created by bot_controller.py, arrow keys controls tank steering and the mouse controls shooting.  Clicking at any point on the arena will fire a shell at that point.
+
+The test harness viewer also displays extra bot information found in the bot array.
